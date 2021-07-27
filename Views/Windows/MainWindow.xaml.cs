@@ -23,6 +23,7 @@ namespace CV_19StatisticsWPF
         public MainWindow()
         {
             InitializeComponent();
+            MainFrame.Content = new Views.Pages.MainPage();
         }
     }
 }
