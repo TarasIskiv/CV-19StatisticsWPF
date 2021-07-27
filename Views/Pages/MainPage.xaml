@@ -12,6 +12,21 @@
         <vm:MainPageViewModel></vm:MainPageViewModel>
     </Page.DataContext>
     <Grid Background="White">
-        
+        <Border Margin="10 20" BorderBrush="Gray" BorderThickness="3">
+            <Grid Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="7*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <DockPanel>
+                        
+                    </DockPanel>
+                </StackPanel>
+
+
+                <StackPanel Grid.Column="1"></StackPanel>
+            </Grid>
+        </Border>
     </Grid>
 </Page>
