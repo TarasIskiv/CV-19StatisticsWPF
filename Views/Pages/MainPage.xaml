@@ -20,14 +20,28 @@
                     <ColumnDefinition Width="7*"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0">
-                    <DockPanel >
+                    <DockPanel>
                         <fa:ImageAwesome Icon="Solid_Search" Height="12"/>
-                        <TextBlock Text="Search" Margin="3 0 0 0"></TextBlock>
+                        <TextBlock Text="Search" Margin="3 0 0 0"/>
                     </DockPanel>
+                    <ListBox Margin="0 5 0 0"
+                            ItemsSource="{Binding Path=Countries}"
+                             VerticalContentAlignment="Top"  
+                             ScrollViewer.VerticalScrollBarVisibility="Visible"
+                             ScrollViewer.CanContentScroll="True"
+                             SelectedIndex="0"
+                             SelectedItem="{Binding Path=SelectedCountry}">
+                    </ListBox>
                 </StackPanel>
-
-
-                <StackPanel Grid.Column="1"></StackPanel>
+                <StackPanel Grid.Column="1">
+                    <DockPanel Margin="10 0 0 0">
+                        <fa:ImageAwesome Icon="Solid_Globe" Height="12"/>
+                        <TextBlock Text="{Binding Path=SelectedCountry}" Margin="3 0 0 0"/>
+                    </DockPanel>
+                    <GroupBox Margin=" 0 5 0 0 ">
+                        <DataGrid AutoGenerateColumns="False"></DataGrid>
+                    </GroupBox>
+                </StackPanel>
             </Grid>
         </Border>
     </Grid>
