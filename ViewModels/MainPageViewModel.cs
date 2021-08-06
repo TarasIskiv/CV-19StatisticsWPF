@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CV_19StatisticsWPF.BaseClasses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,27 +10,30 @@ namespace CV_19StatisticsWPF.ViewModels
     internal class MainPageViewModel : BaseViewModel.ViewModel
     {
         private Models.ContriesAndStatistics Statistics;
-        private List<string> _countries;
+        private List<StatisticsParameters> parameters;
 
-        public List<string> Countries
+        public List<StatisticsParameters> Parameters
         {
-            get => _countries;
-            set => Set(ref _countries, value);
+            get => parameters;
+            set => Set(ref parameters, value);
         }
 
-        private string _selectedCountry;
+        
 
-        public string SelectedCountry 
+        private StatisticsParameters _selectedCountry;
+
+        public StatisticsParameters SelectedCountry 
         {
             get => _selectedCountry;
             set => Set(ref _selectedCountry, value);
         }
 
+        
 
         public MainPageViewModel()
         {
             Statistics = new Models.ContriesAndStatistics();
-            Countries = Statistics.contriesNames;
+            Parameters = Statistics.parameters;
         }
     }
 }
