@@ -39,12 +39,74 @@
                         <fa:ImageAwesome Icon="Solid_Globe" Height="12"/>
                         <TextBlock Text="{Binding Path=SelectedCountry.ContryName , UpdateSourceTrigger=PropertyChanged}" Margin="3 0 0 0"/>
                     </DockPanel>
-                    <GroupBox Header="{Binding SelectedCountry.ContryName , FallbackValue='Countries', TargetNullValue='didnt choose country'}">
-                        <DataGrid ItemsSource="{Binding SelectedCountry, UpdateSourceTrigger=PropertyChanged}" Height="330">
-                            
-                        </DataGrid>
+                    <Grid Margin="5 3 5 0" Height="Auto">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Border Grid.Row="0" Grid.Column="0" BorderBrush="Gray" BorderThickness="1">
+                            <TextBlock Text="Country" HorizontalAlignment="Center"/>
+                        </Border>
+                        
+                        <Border Grid.Row="0" Grid.Column="1" BorderBrush="Gray" BorderThickness="1">
+                            <TextBlock Text="New Cases" HorizontalAlignment="Center"/>
+                        </Border>
+                        
+                        <Border Grid.Row="0" Grid.Column="2" BorderBrush="Gray" BorderThickness="1">
+                            <TextBlock  Text="New Deaths" HorizontalAlignment="Center"/>
+                        </Border>
 
-                    </GroupBox>
+                        <Border Grid.Row="0" Grid.Column="3" BorderBrush="Gray" BorderThickness="1">
+                            <TextBlock  Text="Total Cases" HorizontalAlignment="Center"/>
+                        </Border>
+
+                        <Border Grid.Row="0" Grid.Column="4" BorderBrush="Gray" BorderThickness="1">
+                            <TextBlock Text="Total Deaths" HorizontalAlignment="Center"/>
+                        </Border>
+
+                        <Border Grid.Row="0" Grid.Column="5" BorderBrush="Gray" BorderThickness="1">
+                            <TextBlock Text="Total Recovered" HorizontalAlignment="Center"/>
+                        </Border>
+
+
+                        <Border Grid.Row="1" Grid.Column="0" BorderBrush="Gray" BorderThickness="1">
+                            <TextBlock Text="{Binding SelectedCountry.ContryName}" HorizontalAlignment="Center"/>
+                        </Border>
+
+                        <Border Grid.Row="1" Grid.Column="1" BorderBrush="Gray" BorderThickness="1">
+                            <TextBlock Text="{Binding SelectedCountry.NewCases}" HorizontalAlignment="Center"/>
+                        </Border>
+
+                        <Border Grid.Row="1" Grid.Column="2" BorderBrush="Gray" BorderThickness="1">
+                            <TextBlock Text="{Binding SelectedCountry.NewDeaths}" HorizontalAlignment="Center"/>
+                        </Border>
+
+                        <Border Grid.Row="1" Grid.Column="3" BorderBrush="Gray" BorderThickness="1">
+                            <TextBlock Text="{Binding SelectedCountry.TotalCases}" HorizontalAlignment="Center"/>
+                        </Border>
+
+                        <Border Grid.Row="1" Grid.Column="4" BorderBrush="Gray" BorderThickness="1">
+                            <TextBlock Text="{Binding SelectedCountry.TotalDeaths}" HorizontalAlignment="Center"/>
+                        </Border>
+
+                        <Border Grid.Row="1" Grid.Column="5" BorderBrush="Gray" BorderThickness="1">
+                            <TextBlock Text="{Binding SelectedCountry.TotalRecovered}" HorizontalAlignment="Center"/>
+                        </Border>
+                    </Grid>
+                    <Grid Margin="10 20 10 0" Height="310">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                    </Grid>
                 </StackPanel>
             </Grid>
         </Border>
