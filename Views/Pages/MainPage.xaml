@@ -101,13 +101,17 @@
                             <TextBlock Text="{Binding SelectedCountry.TotalRecovered}" HorizontalAlignment="Center"/>
                         </Border>
                     </Grid>
-                    <Grid Margin="10 20 10 0" Height="310">
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                    </Grid>
-                </StackPanel>
+                    <Border Margin="10 20 10 0" Height="310" BorderBrush="Gray" BorderThickness="1">
+                        <Grid >
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            
+                            
+                        </Grid>
+                    </Border>
+        </StackPanel>
             </Grid>
         </Border>
     </Grid>
