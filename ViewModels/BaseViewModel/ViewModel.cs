@@ -12,8 +12,9 @@ namespace CV_19StatisticsWPF.ViewModels.BaseViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void OnPropertychanged([CallerMemberName] string PropertyName = null)
+        protected virtual void OnPropertyChanged([CallerMemberName] string PropertyName = null)
         {
+            
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
         }
 
@@ -21,7 +22,7 @@ namespace CV_19StatisticsWPF.ViewModels.BaseViewModel
         {
             if (Equals(field, value)) return false;
             field = value;
-            OnPropertychanged(PropertyName);
+            OnPropertyChanged(PropertyName);
             return true;
         }
 

@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:oxy="http://oxyplot.org/wpf"
       xmlns:vm ="clr-namespace:CV_19StatisticsWPF.ViewModels"
       xmlns:local="clr-namespace:CV_19StatisticsWPF.Views.Pages"
       xmlns:fa="http://schemas.fontawesome.com/icons/"
@@ -13,7 +14,7 @@
         <vm:MainPageViewModel></vm:MainPageViewModel>
     </Page.DataContext>
     <Grid Background="White">
-        <Border Margin="10 20" BorderBrush="Gray" BorderThickness="3">
+        <Border Margin="10 10" BorderBrush="Gray" BorderThickness="3">
             <Grid Margin="5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="3*"/>
@@ -25,12 +26,13 @@
                         <TextBlock Text="Search" Margin="3 0 0 0"/>
                     </DockPanel>
                     <ListBox Margin="0 5 0 0"
+                             Height="350"
                             ItemsSource="{Binding Path=Parameters}"
                              DisplayMemberPath="ContryName"
                              VerticalContentAlignment="Top"  
                              ScrollViewer.VerticalScrollBarVisibility="Visible"
                              ScrollViewer.CanContentScroll="True"
-                             SelectedItem="{Binding Path=SelectedCountry}"
+                             SelectedItem="{Binding Path=SelectedCountry, UpdateSourceTrigger=PropertyChanged}"
                              >
                     </ListBox>
                 </StackPanel>
@@ -101,17 +103,26 @@
                             <TextBlock Text="{Binding SelectedCountry.TotalRecovered}" HorizontalAlignment="Center"/>
                         </Border>
                     </Grid>
-                    <Border Margin="10 20 10 0" Height="310" BorderBrush="Gray" BorderThickness="1">
-                        <Grid >
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            
-                            
-                        </Grid>
-                    </Border>
-        </StackPanel>
+                    
+                            <oxy:Plot Margin="0 10 10 0" Height="300">
+                                <oxy:Plot.Axes>
+                                    <oxy:LinearAxis Position="Left" Minimum="0" Maximum="{Binding MaximumValueForPlot, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <oxy:LinearAxis Position="Bottom" IsAxisVisible="False" />
+                        </oxy:Plot.Axes>
+                                <oxy:LineSeries Color="Black" 
+                                                
+                                                    Title="New Deaths"
+                                                    ItemsSource="{Binding Path=DataPointsForNewDeaths, UpdateSourceTrigger=PropertyChanged}"
+                                                    DataFieldX="XValue"
+                                                    DataFieldY="YValue"/>
+                                <oxy:LineSeries Color="Red" 
+                                                    Title="New Cases"
+                                                    ItemsSource="{Binding Path=DataPointsForNewCases, UpdateSourceTrigger=PropertyChanged}"
+                                                    DataFieldX="XValue"
+                                                    DataFieldY="YValue"/>
+                            </oxy:Plot>
+
+                </StackPanel>
             </Grid>
         </Border>
     </Grid>
