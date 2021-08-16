@@ -17,8 +17,12 @@ namespace CV_19StatisticsWPF.ViewModels
         private const int ADDTIONAL_VALUE_TO_YSCALE_IN_GRAPHIC = 1;
         private const int DEFAULT_VALUE_TO_YSCALE_IN_GRAPHIC = 1000;
 
-        private Models.CountriesAndStatistics Statistics;
+        private string _searchedResult;
+
+        private CountriesAndStatistics Statistics;
         private List<StatisticsParameters> parameters;
+        private List<StatisticsParameters> _allParameters;
+
 
         private StatisticsParameters _selectedCountry;
         private IEnumerable<DataPoint> _dataPointsForNewCases;
@@ -26,17 +30,63 @@ namespace CV_19StatisticsWPF.ViewModels
 
         private int _maximumValueForPlot;
         private int LastIndexInListOfGeneratedPointsForGraphic;
+
+        public string SearchedResult
+        {
+            get => _searchedResult;
+            set
+            {
+                if (!Set(ref _searchedResult, value)) 
+                {
+                    return;
+                }
+                if(SelectedCountry != null)
+                {
+                    _dataPointsForNewCases = getEmptyGraphic();
+                    _dataPointsForNewDeaths = getEmptyGraphic();
+                    OnPropertyChanged(nameof(DataPointsForNewCases));
+                    OnPropertyChanged(nameof(DataPointsForNewDeaths));
+                    _selectedCountry = null;
+                    OnPropertyChanged(nameof(SelectedCountry));
+                }
+                parameters = resultOfSearch(value);
+                OnPropertyChanged(nameof(Parameters));
+            }
+        }
+
+        private List<DataPoint> getEmptyGraphic()
+        {
+            return new List<DataPoint>() { new DataPoint() { XValue = 0, YValue = 0 } };
+        }
+
+        private List<StatisticsParameters> resultOfSearch(string search)
+        {
+            var temporaryListOfParamates = new List<StatisticsParameters>();
+            if (string.IsNullOrEmpty(search))
+            {
+                return AllParameters;
+            }
+
+            temporaryListOfParamates = parameters.Where(x => x.CountryName.ToString().StartsWith(search)).ToList();
+            return temporaryListOfParamates;
+        }
+
         public List<StatisticsParameters> Parameters
         {
             get => parameters;
             set => Set(ref parameters, value);
+        }
+        public List<StatisticsParameters> AllParameters
+        {
+            get => _allParameters;
+            set => Set(ref _allParameters, value);
         }
         public StatisticsParameters SelectedCountry
         {
             get => _selectedCountry;
             set
             {
-                if (!Set(ref _selectedCountry, value)) return;
+                if (!Set(ref _selectedCountry, value) || value == null) return;
                 _dataPointsForNewDeaths = generatePoints(SelectedCountry.NewDeaths);
                 OnPropertyChanged(nameof(DataPointsForNewDeaths));
                 _dataPointsForNewCases = generatePoints(SelectedCountry.NewCases);
@@ -62,8 +112,8 @@ namespace CV_19StatisticsWPF.ViewModels
             get => _maximumValueForPlot;
             set => Set(ref _maximumValueForPlot, value);
         }
-     
         
+
         private List<DataPoint> generatePoints(string selectedValue)
         {
             var currentDataPoints = new List<Models.DataPoint>();
@@ -150,7 +200,8 @@ namespace CV_19StatisticsWPF.ViewModels
         public MainPageViewModel()
         {
             Statistics = new Models.CountriesAndStatistics();
-            Parameters = Statistics.parameters;
+            Parameters = AllParameters = Statistics.parameters;
+            //AllParameters = Statistics.parameters;
         }
     }
 }
