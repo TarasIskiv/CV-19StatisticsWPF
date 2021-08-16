@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CV_19StatisticsWPF.Models
 {
-    internal class ContriesAndStatistics
+    internal class CountriesAndStatistics
     {
         private string _urlAddress = "https://www.worldometers.info/coronavirus/";
         private string _urlXPath = "//div[@class='col-md-8']//div[@id='nav-tabContent']//div[@class='main_table_countries_div']//table[@id='main_table_countries_today']/tbody";
@@ -16,7 +16,7 @@ namespace CV_19StatisticsWPF.Models
 
         readonly int TOTAL_RECOVERED_INDEX;
 
-        internal List<string> contriesNames;
+        internal List<string> countriesNames;
 
         internal List<BaseClasses.StatisticsParameters> parameters;
 
@@ -34,12 +34,12 @@ namespace CV_19StatisticsWPF.Models
 
 
 
-        public ContriesAndStatistics() 
+        public CountriesAndStatistics() 
         {
             htmlDocumentFromURL = getHtmlDocument();
             TOTAL_RECOVERED_INDEX = 6;
 
-            contriesNames = new List<string>();
+            countriesNames = new List<string>();
             parameters = new List<BaseClasses.StatisticsParameters>();
             setValuesToVariable(_urlXPath);
         }
@@ -55,26 +55,42 @@ namespace CV_19StatisticsWPF.Models
 
         public List<string> parsingHtmlDocument(string urlXPath)
         {
-            var l = new List<string>();
+            var temporaryListFromParsedHTML = new List<string>();
             foreach (var item in htmlDocumentFromURL.DocumentNode.SelectNodes(urlXPath))
             {
-                l.Add(item.InnerText);
+                temporaryListFromParsedHTML.Add(item.InnerText);
             }
 
+
+            temporaryListFromParsedHTML = cuttingList(temporaryListFromParsedHTML);
             
-            l = cuttingList(l, "USA");
-            
-            return l;
+            return temporaryListFromParsedHTML;
         }
 
-        public List<string> cuttingList(List<string> workingList, string keyWord)
+        public List<string> cuttingList(List<string> workingList)
         {
+            var newWorkingList = new List<string>();
+            int indexToSkip = -1;
+            const string keyWord = "USA";
+
             for (int i = 0; i < workingList.Count; ++i)
             {
                 string line = workingList[i].Trim(new char[] { '\n', ' ' });
                 workingList[i] = line;
             }
 
+            
+            newWorkingList = removingNewLinesFromList(workingList);
+
+            indexToSkip = getIndexToSkip(newWorkingList, keyWord);
+
+            return newWorkingList.Skip(indexToSkip).ToList();
+
+
+        }
+
+        private List<string> removingNewLinesFromList(List<string> workingList)
+        {
             var newWorkingList = new List<string>();
             foreach (var item in workingList)
             {
@@ -85,29 +101,28 @@ namespace CV_19StatisticsWPF.Models
                     newWorkingList.Add(element.Trim().ToString());
                 }
             }
-            int indexToSkip = -1;
+
+            return newWorkingList;
+        }
+
+        private int getIndexToSkip(List<string> newWorkingList, string keyWord)
+        {
             for (int i = 0; i < newWorkingList.Count; ++i)
             {
                 if (newWorkingList[i].Equals(keyWord))
                 {
-                    indexToSkip = i;
-                    break;
+                    return i;
                 }
             }
-            if (keyWord.Equals("USA"))
-                return newWorkingList.Skip(indexToSkip).ToList();
-
-            return newWorkingList.Skip(++indexToSkip).ToList();
-
+            return -1;
         }
-
 
         public void setValuesToVariable(string urlXPath)
         {
             averageElementsInContriesStatList(parsingHtmlDocument(urlXPath));
         }
 
-
+        //JUST THIS FUNCTION
         public void averageElementsInContriesStatList(List<string> workingList)
         {
             
@@ -134,8 +149,7 @@ namespace CV_19StatisticsWPF.Models
             }
             for (int i = 0; i < workingList.Count; i += 23)
             {
-                //Console.WriteLine("COUNTRY : " + workingList[i]);
-                contriesNames.Add(workingList[i]);
+                countriesNames.Add(workingList[i]);
                 
                 var temporaryListOfParameters = new List<string>();
                 if (i + TOTAL_RECOVERED_INDEX < workingList.Count)
@@ -146,7 +160,6 @@ namespace CV_19StatisticsWPF.Models
                     }
                     parameters.Add(new BaseClasses.StatisticsParameters(temporaryListOfParameters));
                 }
-                //temporaryListOfParameters.Clear();
             }
             
         }

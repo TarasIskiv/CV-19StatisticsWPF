@@ -17,7 +17,7 @@ namespace CV_19StatisticsWPF.ViewModels
         private const int ADDTIONAL_VALUE_TO_YSCALE_IN_GRAPHIC = 1;
         private const int DEFAULT_VALUE_TO_YSCALE_IN_GRAPHIC = 1000;
 
-        private Models.ContriesAndStatistics Statistics;
+        private Models.CountriesAndStatistics Statistics;
         private List<StatisticsParameters> parameters;
 
         private StatisticsParameters _selectedCountry;
@@ -149,7 +149,7 @@ namespace CV_19StatisticsWPF.ViewModels
 
         public MainPageViewModel()
         {
-            Statistics = new Models.ContriesAndStatistics();
+            Statistics = new Models.CountriesAndStatistics();
             Parameters = Statistics.parameters;
         }
     }

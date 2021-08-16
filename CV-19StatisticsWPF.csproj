@@ -85,7 +85,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="BaseClasses\StatisticsParameters.cs" />
-    <Compile Include="Models\ContriesAndStatistics.cs" />
+    <Compile Include="Models\CountriesAndStatistics.cs" />
     <Compile Include="Models\DataPoint.cs" />
     <Compile Include="ViewModels\BaseViewModel\ViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />

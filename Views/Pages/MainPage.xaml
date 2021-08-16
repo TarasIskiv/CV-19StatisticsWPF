@@ -80,7 +80,7 @@
 
 
                         <Border Grid.Row="1" Grid.Column="0" BorderBrush="Gray" BorderThickness="1">
-                            <TextBlock Text="{Binding SelectedCountry.ContryName}" HorizontalAlignment="Center"/>
+                            <TextBlock Text="{Binding SelectedCountry.CountryName}" HorizontalAlignment="Center"/>
                         </Border>
 
                         <Border Grid.Row="1" Grid.Column="1" BorderBrush="Gray" BorderThickness="1">

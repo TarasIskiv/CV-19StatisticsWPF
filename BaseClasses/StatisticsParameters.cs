@@ -9,7 +9,7 @@ namespace CV_19StatisticsWPF.BaseClasses
     internal class StatisticsParameters
     {
         public StatisticsParameters() { }
-        public string ContryName { get; set; }
+        public string CountryName { get; set; }
         public string TotalCases { get; set; }
         public string NewCases { get; set; }
         public string TotalDeaths { get; set; }
@@ -18,7 +18,7 @@ namespace CV_19StatisticsWPF.BaseClasses
 
         public StatisticsParameters(List<string> parameters)
         {
-            ContryName = parameters[0];
+            CountryName = parameters[0];
             TotalCases = parameters[1];
             NewCases = parameters[2];
             TotalDeaths = parameters[3];
