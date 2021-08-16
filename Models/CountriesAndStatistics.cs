@@ -16,7 +16,6 @@ namespace CV_19StatisticsWPF.Models
 
         readonly int TOTAL_RECOVERED_INDEX;
 
-        internal List<string> countriesNames;
 
         internal List<BaseClasses.StatisticsParameters> parameters;
 
@@ -39,7 +38,6 @@ namespace CV_19StatisticsWPF.Models
             htmlDocumentFromURL = getHtmlDocument();
             TOTAL_RECOVERED_INDEX = 6;
 
-            countriesNames = new List<string>();
             parameters = new List<BaseClasses.StatisticsParameters>();
             setValuesToVariable(_urlXPath);
         }
@@ -122,21 +120,29 @@ namespace CV_19StatisticsWPF.Models
             averageElementsInContriesStatList(parsingHtmlDocument(urlXPath));
         }
 
-        //JUST THIS FUNCTION
+        
         public void averageElementsInContriesStatList(List<string> workingList)
+        {            
+            int indexToSkip = getIndexOfTotal(workingList);
+            workingList = removingContinentsFromList(workingList.Take(indexToSkip).ToList());
+            addingElementsToParamaters(workingList);
+        }
+        private int getIndexOfTotal(List<string> workingList)
         {
-            
             int indexToSkip = 0;
             foreach (var it_ in workingList)
             {
                 if (it_.Contains("Total:"))
                 {
-                    break;
+                    return indexToSkip;
                 }
                 indexToSkip++;
             }
-            workingList = workingList.Take(indexToSkip).ToList();
+            return 0;
+        }
 
+        private List<string> removingContinentsFromList(List<string> workingList)
+        {
             for (int i = 0; i < workingList.Count; ++i)
             {
                 for (int j = 0; j < continents.Count; ++j)
@@ -147,10 +153,13 @@ namespace CV_19StatisticsWPF.Models
                     }
                 }
             }
+
+            return workingList;
+        }
+        private void addingElementsToParamaters(List<string> workingList)
+        {
             for (int i = 0; i < workingList.Count; i += 23)
             {
-                countriesNames.Add(workingList[i]);
-                
                 var temporaryListOfParameters = new List<string>();
                 if (i + TOTAL_RECOVERED_INDEX < workingList.Count)
                 {
@@ -161,7 +170,6 @@ namespace CV_19StatisticsWPF.Models
                     parameters.Add(new BaseClasses.StatisticsParameters(temporaryListOfParameters));
                 }
             }
-            
         }
     }
 
