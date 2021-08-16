@@ -8,9 +8,9 @@ namespace CV_19StatisticsWPF.Models
 {
     internal class DataPoint
     {
-        public double XValue { get; set; }
+        public int XValue { get; set; }
 
-        public double YValue { get; set; }
+        public int YValue { get; set; }
 
         public DataPoint() {}
     }
